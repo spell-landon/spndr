@@ -1,15 +1,74 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans:
+    'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --color-monarch-orange-50: #fff7ed; /* very light */
+  --color-monarch-orange-100: #ffedd5;
+  --color-monarch-orange-200: #fed7aa;
+  --color-monarch-orange-300: #fdba74;
+  --color-monarch-orange-400: #fb923c;
+  --color-monarch-orange-500: #f97316; /* base */
+  --color-monarch-orange-600: #e2580f; /* hover/dark */
+  --color-monarch-orange-700: #c0450c;
+  --color-monarch-orange-800: #9a340a;
+  --color-monarch-orange-900: #762508; /* very dark */
+
+  --color-monarch-blue-50: #eff6ff;
+  --color-monarch-blue-100: #dbeafe;
+  --color-monarch-blue-200: #bfdbfe;
+  --color-monarch-blue-300: #93c5fd;
+  --color-monarch-blue-400: #60a5fa;
+  --color-monarch-blue-500: #3b82f6; /* base */
+  --color-monarch-blue-600: #2563eb; /* hover/dark */
+  --color-monarch-blue-700: #1d4ed8;
+  --color-monarch-blue-800: #1e40af;
+  --color-monarch-blue-900: #1e3a8a; /* very dark */
+
+  --color-monarch-green-50: #f0fdf4;
+  --color-monarch-green-100: #dcfce7;
+  --color-monarch-green-200: #bbf7d0;
+  --color-monarch-green-300: #86efac;
+  --color-monarch-green-400: #4ade80;
+  --color-monarch-green-500: #22c55e; /* base */
+  --color-monarch-green-600: #16a34a; /* hover/dark */
+  --color-monarch-green-700: #15803d;
+  --color-monarch-green-800: #166534;
+  --color-monarch-green-900: #14532d; /* very dark */
+
+  --color-monarch-red-50: #fef2f2;
+  --color-monarch-red-100: #fee2e2;
+  --color-monarch-red-200: #fecaca;
+  --color-monarch-red-300: #fca5a5;
+  --color-monarch-red-400: #f87171;
+  --color-monarch-red-500: #ef4444; /* base */
+  --color-monarch-red-600: #dc2626; /* hover/dark */
+  --color-monarch-red-700: #b91c1c;
+  --color-monarch-red-800: #991b1b;
+  --color-monarch-red-900: #7f1d1d; /* very dark */
+
+  --color-monarch-neutral-50: #f6f5f3; /* very light - your requested color */
+  --color-monarch-neutral-100: #edecea;
+  --color-monarch-neutral-200: #dcdad7;
+  --color-monarch-neutral-300: #c5c2bd;
+  --color-monarch-neutral-400: #a8a49a;
+  --color-monarch-neutral-500: #8b867a; /* base neutral */
+  --color-monarch-neutral-600: #6f6b61; /* hover/dark */
+  --color-monarch-neutral-700: #564f47;
+  --color-monarch-neutral-800: #3f372f;
+  --color-monarch-neutral-900: #29221a; /* very dark */
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-white dark:bg-monarch-neutral-950;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
+}
+
+button {
+  @apply cursor-pointer;
 }

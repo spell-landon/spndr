@@ -1,3 +1,4 @@
+// app/routes.ts
 import {
   type RouteConfig,
   index,
@@ -14,5 +15,6 @@ export default [
     route('goals', './routes/goals.tsx'),
     route('recurring', './routes/recurring.tsx'),
     route('profile', './routes/profile.tsx'),
+    route('settings/categories', './routes/settings.categories.tsx'),
   ]),
 ] satisfies RouteConfig;

@@ -1,255 +1,487 @@
-import { useEffect, useState } from 'react';
+// app/routes/budget.tsx
+import { useState, useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
+import type { BudgetCategory, MonthlyBudget } from '../types';
 import {
   Plus,
   Edit3,
-  Archive,
   Trash2,
+  Archive,
   GripVertical,
-  ChevronUp,
   ChevronDown,
+  ChevronUp,
+  X,
+  DollarSign,
+  Calendar,
+  TrendingUp,
+  TrendingDown,
 } from 'lucide-react';
-import { supabase } from '~/lib/supabase';
-import CategoryModal, {
-  type Category,
-} from '../components/modals/CategoryModal';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
+import Money from '~/components/Money';
 
-const BudgetPage = () => {
-  const [budgetCategories, setBudgetCategories] = useState<Category[]>([]);
+export default function Budget() {
+  const { user } = useAuth();
+  const [budgetCategories, setBudgetCategories] = useState<BudgetCategory[]>(
+    []
+  );
+  const [monthlyBudgets, setMonthlyBudgets] = useState<MonthlyBudget[]>([]);
+  const [currentMonth, setCurrentMonth] = useState<string>(
+    new Date().toISOString().slice(0, 7) + '-01'
+  );
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
   const [expandedCategories, setExpandedCategories] = useState<
     Record<string, boolean>
   >({});
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [showSubcategoryModal, setShowSubcategoryModal] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [editingSubcategory, setEditingSubcategory] = useState<Category | null>(
+  const [editingCategory, setEditingCategory] = useState<BudgetCategory | null>(
     null
   );
+  const [editingSubcategory, setEditingSubcategory] = useState<any>(null);
+  const [parentCategoryId, setParentCategoryId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Fetch all categories and subcategories
   useEffect(() => {
-    const fetchCategories = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
+    if (user) {
+      fetchBudgetCategories();
+      fetchMonthlyBudgets();
+    }
+  }, [user, selectedMonth]);
 
+  const fetchBudgetCategories = async () => {
+    try {
       const { data, error } = await supabase
-        .from('budget_categories')
+        .from('budget_categories_old')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('user_id', user!.id)
         .order('created_at', { ascending: true });
 
-      if (error) {
-        console.error(error);
-        return;
-      }
+      if (error) throw error;
+      setBudgetCategories(data || []);
+    } catch (error) {
+      console.error('Error fetching budget categories:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      // Separate parent and subcategories
-      const parents = (data ?? []).filter((c) => !c.parent_id);
-      const subs = (data ?? []).filter((c) => c.parent_id);
-
-      // Attach subcategories to parents
-      const grouped = parents.map((parent) => ({
-        ...parent,
-        subcategories: subs.filter((s) => s.parent_id === parent.id),
-      }));
-
-      setBudgetCategories(grouped);
-    };
-
-    fetchCategories();
-  }, []);
-
-  // Add / Edit a category or subcategory
-  const handleCategorySave = async (
-    categoryData: Category,
-    parentCategoryId?: string
-  ) => {
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
-
+  const fetchMonthlyBudgets = async () => {
     try {
-      const payload = {
-        name: categoryData.name,
-        budgeted: categoryData.budgeted,
-        spent: categoryData.spent,
-        remaining: categoryData.budgeted - categoryData.spent,
-        user_id: user.id,
-        parent_id: parentCategoryId ?? null,
-        archived: categoryData.archived ?? false,
-      };
+      const { data, error } = await supabase
+        .from('monthly_budgets')
+        .select('*')
+        .eq('user_id', user!.id)
+        .order('month', { ascending: false })
+        .limit(12);
 
-      if (categoryData.id) {
-        // Update existing
-        const { data: updated, error } = await supabase
-          .from('budget_categories')
-          .update(payload)
-          .eq('id', categoryData.id)
-          .select()
-          .single();
+      if (error) throw error;
+      setMonthlyBudgets(data || []);
+    } catch (error) {
+      console.error('Error fetching monthly budgets:', error);
+    }
+  };
 
-        if (error) throw error;
+  const saveMonthlySnapshot = async () => {
+    try {
+      const totalBudgeted = budgetCategories.reduce(
+        (sum, cat) => sum + cat.budgeted,
+        0
+      );
+      const totalSpent = budgetCategories.reduce(
+        (sum, cat) => sum + cat.spent,
+        0
+      );
 
-        setBudgetCategories((prev) =>
-          prev.map((cat) => {
-            if (cat.id === updated.parent_id) {
-              // update subcategory
-              return {
-                ...cat,
-                subcategories: cat.subcategories?.map((sub) =>
-                  sub.id === updated.id ? updated : sub
-                ),
-              };
-            } else if (cat.id === updated.id) {
-              // update parent category
-              return { ...cat, ...updated };
-            }
-            return cat;
-          })
+      const { error } = await supabase.from('monthly_budgets').upsert(
+        {
+          user_id: user!.id,
+          month: currentMonth,
+          total_income: 0, // Calculate from transactions
+          total_expenses: totalSpent,
+          total_budgeted: totalBudgeted,
+          categories: budgetCategories,
+        },
+        {
+          onConflict: 'user_id,month',
+        }
+      );
+
+      if (error) throw error;
+      fetchMonthlyBudgets();
+    } catch (error) {
+      console.error('Error saving monthly snapshot:', error);
+    }
+  };
+
+  const handleCategorySave = async (
+    categoryData: BudgetCategory,
+    parentId?: string
+  ) => {
+    try {
+      if (parentId) {
+        // Handle subcategory
+        const parentCat = budgetCategories.find((c) => c.id === parentId);
+        if (!parentCat) return;
+
+        const updatedSubcategories = [...parentCat.subcategories];
+        const existingIndex = updatedSubcategories.findIndex(
+          (s) => s.id === categoryData.id
         );
-      } else {
-        // Insert new
-        const { data: inserted, error } = await supabase
-          .from('budget_categories')
-          .insert(payload)
-          .select()
-          .single();
+
+        if (existingIndex >= 0) {
+          updatedSubcategories[existingIndex] = categoryData.subcategories[0];
+        } else {
+          updatedSubcategories.push({
+            ...categoryData.subcategories[0],
+            id: Date.now(),
+          });
+        }
+
+        const { error } = await supabase
+          .from('budget_categories_old')
+          .update({ subcategories: updatedSubcategories })
+          .eq('id', parentId);
 
         if (error) throw error;
+      } else {
+        // Handle category
+        if (categoryData.id) {
+          const { error } = await supabase
+            .from('budget_categories_old')
+            .update(categoryData)
+            .eq('id', categoryData.id);
 
-        if (parentCategoryId) {
-          // Add as subcategory
-          setBudgetCategories((prev) =>
-            prev.map((cat) =>
-              cat.id === parentCategoryId
-                ? {
-                    ...cat,
-                    subcategories: [...(cat.subcategories ?? []), inserted],
-                  }
-                : cat
-            )
-          );
+          if (error) throw error;
         } else {
-          // Add as parent
-          setBudgetCategories((prev) => [
-            ...prev,
-            { ...inserted, subcategories: [] },
-          ]);
+          const { error } = await supabase
+            .from('budget_categories_old')
+            .insert({ ...categoryData, user_id: user!.id });
+
+          if (error) throw error;
         }
       }
-    } catch (err) {
-      console.error(err);
+
+      fetchBudgetCategories();
+      saveMonthlySnapshot();
+    } catch (error) {
+      console.error('Error saving category:', error);
     }
   };
 
   const handleDeleteCategory = async (categoryId: string) => {
-    await supabase.from('budget_categories').delete().eq('id', categoryId);
-    setBudgetCategories((prev) => prev.filter((cat) => cat.id !== categoryId));
+    try {
+      const { error } = await supabase
+        .from('budget_categories_old')
+        .delete()
+        .eq('id', categoryId);
+
+      if (error) throw error;
+      fetchBudgetCategories();
+    } catch (error) {
+      console.error('Error deleting category:', error);
+    }
   };
 
-  const handleDeleteSubcategory = async (categoryId: string, subId: string) => {
-    await supabase.from('budget_categories').delete().eq('id', subId);
-    setBudgetCategories((prev) =>
-      prev.map((cat) =>
-        cat.id === categoryId
-          ? {
-              ...cat,
-              subcategories: cat.subcategories?.filter((s) => s.id !== subId),
-            }
-          : cat
-      )
+  const CategoryModal = ({
+    category,
+    subcategory,
+    onClose,
+    onSave,
+    parentId,
+  }: any) => {
+    const [formData, setFormData] = useState({
+      name: category?.name || subcategory?.name || '',
+      budgeted: category?.budgeted || subcategory?.budgeted || 0,
+      spent: category?.spent || subcategory?.spent || 0,
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const remaining = formData.budgeted - formData.spent;
+
+      if (subcategory || parentId) {
+        onSave(
+          {
+            subcategories: [
+              {
+                ...(subcategory || {}),
+                ...formData,
+                remaining,
+                id: subcategory?.id || Date.now(),
+                archived: false,
+              },
+            ],
+          },
+          parentId
+        );
+      } else {
+        onSave({
+          ...(category || {}),
+          ...formData,
+          remaining,
+          archived: false,
+          subcategories: category?.subcategories || [],
+        });
+      }
+      onClose();
+    };
+
+    return (
+      <div className='fixed inset-0 bg-black/40 flex items-center justify-center z-50'>
+        <div className='bg-white rounded-lg p-6 w-96'>
+          <div className='flex justify-between items-center mb-6'>
+            <h2 className='text-xl font-semibold'>
+              {category?.id || subcategory?.id ? 'Edit' : 'Add'}{' '}
+              {parentId ? 'Subcategory' : 'Category'}
+            </h2>
+            <button
+              onClick={onClose}
+              className='text-monarch-neutral-500 hover:text-monarch-neutral-700'>
+              <X className='w-6 h-6' />
+            </button>
+          </div>
+
+          <div className='space-y-4'>
+            <div>
+              <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
+                Name
+              </label>
+              <input
+                type='text'
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+                className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500'
+                required
+              />
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
+                Budgeted
+              </label>
+              <div className='relative'>
+                <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
+                <input
+                  type='number'
+                  step='0.01'
+                  value={formData.budgeted}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      budgeted: parseFloat(e.target.value) || 0,
+                    })
+                  }
+                  className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500'
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
+                Spent
+              </label>
+              <div className='relative'>
+                <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
+                <input
+                  type='number'
+                  step='0.01'
+                  value={formData.spent}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      spent: parseFloat(e.target.value) || 0,
+                    })
+                  }
+                  className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500'
+                />
+              </div>
+            </div>
+
+            <div className='flex gap-3 pt-4'>
+              <button
+                type='button'
+                onClick={onClose}
+                className='flex-1 px-4 py-2 text-monarch-neutral-600 border rounded-lg hover:bg-monarch-neutral-50'>
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmit}
+                className='flex-1 px-4 py-2 bg-monarch-orange-500 text-white rounded-lg hover:bg-monarch-orange-600'>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   };
 
-  const handleArchiveCategory = async (categoryId: string) => {
-    const cat = budgetCategories.find((c) => c.id === categoryId);
-    if (!cat) return;
-    await supabase
-      .from('budget_categories')
-      .update({ archived: !cat.archived })
-      .eq('id', categoryId);
+  const getMonthName = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'long',
+      year: 'numeric',
+    });
+  };
 
-    setBudgetCategories((prev) =>
-      prev.map((c) =>
-        c.id === categoryId ? { ...c, archived: !c.archived } : c
-      )
+  const chartData = monthlyBudgets
+    .map((mb) => ({
+      month: new Date(mb.month).toLocaleDateString('en-US', {
+        month: 'short',
+        year: '2-digit',
+      }),
+      budgeted: <Money value={mb.total_budgeted} />,
+      spent: <Money value={mb.total_expenses} />,
+    }))
+    .reverse();
+
+  if (loading) {
+    return (
+      <div className='flex h-screen items-center justify-center'>
+        <div className='w-12 h-12 border-4 border-monarch-orange-500 border-t-transparent rounded-full animate-spin'></div>
+      </div>
     );
-  };
+  }
 
-  const handleArchiveSubcategory = async (
-    categoryId: string,
-    subId: string
-  ) => {
-    const parent = budgetCategories.find((c) => c.id === categoryId);
-    if (!parent) return;
-    const sub = parent.subcategories?.find((s) => s.id === subId);
-    if (!sub) return;
-    await supabase
-      .from('budget_categories')
-      .update({ archived: !sub.archived })
-      .eq('id', subId);
-
-    setBudgetCategories((prev) =>
-      prev.map((c) =>
-        c.id === categoryId
-          ? {
-              ...c,
-              subcategories: c.subcategories?.map((s) =>
-                s.id === subId ? { ...s, archived: !s.archived } : s
-              ),
-            }
-          : c
-      )
-    );
-  };
-
-  const toggleCategoryExpansion = (categoryId: string) => {
-    setExpandedCategories((prev) => ({
-      ...prev,
-      [categoryId]: !prev[categoryId],
-    }));
-  };
+  const totalBudgeted = budgetCategories.reduce(
+    (sum, cat) => sum + cat.budgeted,
+    0
+  );
+  const totalSpent = budgetCategories.reduce((sum, cat) => sum + cat.spent, 0);
+  const totalRemaining = totalBudgeted - totalSpent;
 
   return (
     <div className='p-6'>
       <div className='flex justify-between items-center mb-6'>
-        <h1 className='text-2xl font-bold text-gray-800'>Budget</h1>
+        <h1 className='text-2xl font-bold text-monarch-neutral-800'>Budget</h1>
         <div className='flex items-center gap-4'>
-          <div className='text-right'>
-            <p className='text-2xl font-bold text-green-600'>$1,268</p>
-            <p className='text-sm text-gray-600'>Left to budget</p>
-          </div>
+          <select
+            value={selectedMonth}
+            onChange={(e) => setSelectedMonth(e.target.value)}
+            className='px-4 py-2 border border-black/50 rounded-lg focus:ring-2 focus:ring-monarch-orange-500'>
+            <option value={currentMonth}>Current Month</option>
+            {monthlyBudgets.map((mb) => (
+              <option key={mb.id} value={mb.month}>
+                {getMonthName(mb.month)}
+              </option>
+            ))}
+          </select>
           <button
             onClick={() => {
-              setEditingCategory({});
+              setEditingCategory(null);
               setShowCategoryModal(true);
             }}
-            className='bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex items-center gap-2'>
+            className='bg-monarch-orange-500 text-white px-4 py-2 rounded-lg hover:bg-monarch-orange-600 flex items-center gap-2'>
             <Plus className='w-4 h-4' />
             Add Category
           </button>
         </div>
       </div>
 
+      {/* Summary Cards */}
+      <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-6'>
+        <div className='bg-white rounded-xl p-6 shadow-sm'>
+          <div className='flex items-center justify-between mb-2'>
+            <h3 className='text-sm font-medium text-monarch-neutral-600'>
+              Total Budgeted
+            </h3>
+            <TrendingUp className='w-5 h-5 text-monarch-blue-500' />
+          </div>
+          <p className='text-2xl font-bold text-monarch-neutral-800'>
+            <Money value={totalBudgeted} />
+          </p>
+        </div>
+
+        <div className='bg-white rounded-xl p-6 shadow-sm'>
+          <div className='flex items-center justify-between mb-2'>
+            <h3 className='text-sm font-medium text-monarch-neutral-600'>
+              Total Spent
+            </h3>
+            <TrendingDown className='w-5 h-5 text-monarch-red-500' />
+          </div>
+          <p className='text-2xl font-bold text-monarch-neutral-800'>
+            <Money value={totalSpent} />
+          </p>
+        </div>
+
+        <div className='bg-white rounded-xl p-6 shadow-sm'>
+          <div className='flex items-center justify-between mb-2'>
+            <h3 className='text-sm font-medium text-monarch-neutral-600'>
+              Remaining
+            </h3>
+            <DollarSign className='w-5 h-5 text-monarch-green-500' />
+          </div>
+          <p
+            className={`text-2xl font-bold ${totalRemaining >= 0 ? 'text-monarch-green-600' : 'text-monarch-red-600'}`}>
+            <Money value={totalRemaining} />
+          </p>
+        </div>
+      </div>
+
+      {/* Historical Chart */}
+      {chartData.length > 0 && (
+        <div className='bg-white rounded-xl p-6 shadow-sm mb-6'>
+          <h3 className='text-lg font-semibold text-monarch-neutral-800 mb-4'>
+            Budget History (Last 12 Months)
+          </h3>
+          <ResponsiveContainer width='100%' height={300}>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray='3 3' />
+              <XAxis dataKey='month' />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
+                type='monotone'
+                dataKey='budgeted'
+                stroke='#f97316'
+                strokeWidth={2}
+                name='Budgeted'
+              />
+              <Line
+                type='monotone'
+                dataKey='spent'
+                stroke='#ef4444'
+                strokeWidth={2}
+                name='Spent'
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {/* Budget Categories */}
       <div className='space-y-4'>
         {budgetCategories
           .filter((cat) => !cat.archived)
           .map((category) => (
-            <div
-              key={category.id}
-              className='bg-white rounded-xl shadow-sm border border-black/10 overflow-hidden'>
+            <div key={category.id} className='bg-white rounded-xl shadow-sm'>
               <div className='p-4'>
                 <div className='flex items-center justify-between'>
                   <div className='flex items-center gap-3'>
-                    <button className='cursor-move text-gray-400 hover:text-gray-600'>
+                    <button className='cursor-move text-monarch-neutral-400 hover:text-monarch-neutral-600'>
                       <GripVertical className='w-5 h-5' />
                     </button>
 
                     <button
-                      onClick={() => toggleCategoryExpansion(category.id!)}
-                      className='text-gray-600 hover:text-gray-800'>
+                      onClick={() =>
+                        setExpandedCategories((prev) => ({
+                          ...prev,
+                          [category.id!]: !prev[category.id!],
+                        }))
+                      }
+                      className='text-monarch-neutral-600 hover:text-monarch-neutral-800'>
                       {expandedCategories[category.id!] ? (
                         <ChevronUp className='w-5 h-5' />
                       ) : (
@@ -258,11 +490,12 @@ const BudgetPage = () => {
                     </button>
 
                     <div>
-                      <h3 className='font-semibold text-gray-800'>
+                      <h3 className='font-semibold text-monarch-neutral-800'>
                         {category.name}
                       </h3>
-                      <p className='text-sm text-gray-600'>
-                        ${category.spent} of ${category.budgeted} spent
+                      <p className='text-sm text-monarch-neutral-600'>
+                        <Money value={category.spent} /> of{' '}
+                        <Money value={category.budgeted} /> spent
                       </p>
                     </div>
                   </div>
@@ -270,9 +503,11 @@ const BudgetPage = () => {
                   <div className='flex items-center gap-4'>
                     <div className='text-right'>
                       <p className='font-semibold text-lg'>
-                        ${category.remaining}
+                        <Money value={category.remaining} />
                       </p>
-                      <p className='text-sm text-gray-600'>remaining</p>
+                      <p className='text-sm text-monarch-neutral-600'>
+                        remaining
+                      </p>
                     </div>
 
                     <div className='flex items-center gap-2'>
@@ -281,39 +516,34 @@ const BudgetPage = () => {
                           setEditingCategory(category);
                           setShowCategoryModal(true);
                         }}
-                        className='text-gray-500 hover:text-blue-600 p-1'>
+                        className='text-monarch-neutral-500 hover:text-monarch-blue-600 p-1'>
                         <Edit3 className='w-4 h-4' />
                       </button>
 
                       <button
-                        onClick={() => handleArchiveCategory(category.id!)}
-                        className='text-gray-500 hover:text-yellow-600 p-1'>
-                        <Archive className='w-4 h-4' />
-                      </button>
-
-                      <button
                         onClick={() => handleDeleteCategory(category.id!)}
-                        className='text-gray-500 hover:text-red-600 p-1'>
+                        className='text-monarch-neutral-500 hover:text-monarch-red-600 p-1'>
                         <Trash2 className='w-4 h-4' />
                       </button>
 
                       <button
                         onClick={() => {
-                          setEditingSubcategory({});
-                          setEditingCategory({ id: category.id });
+                          setEditingSubcategory(null);
+                          setParentCategoryId(category.id!);
                           setShowSubcategoryModal(true);
                         }}
-                        className='text-orange-500 hover:text-orange-600 p-1'>
+                        className='text-monarch-orange-500 hover:text-monarch-orange-600 p-1'>
                         <Plus className='w-4 h-4' />
                       </button>
                     </div>
                   </div>
                 </div>
 
+                {/* Progress Bar */}
                 <div className='mt-4'>
-                  <div className='w-full bg-gray-200 rounded-full h-2'>
+                  <div className='w-full bg-monarch-neutral-200 rounded-full h-2'>
                     <div
-                      className='bg-orange-500 h-2 rounded-full transition-all duration-300'
+                      className='bg-monarch-orange-500 h-2 rounded-full transition-all duration-300'
                       style={{
                         width: `${Math.min((category.spent / category.budgeted) * 100, 100)}%`,
                       }}></div>
@@ -321,85 +551,70 @@ const BudgetPage = () => {
                 </div>
               </div>
 
-              {expandedCategories[category.id!] && (
-                <div className='border-t border-black/10 bg-gray-50'>
-                  {category.subcategories
-                    ?.filter((sub) => !sub.archived)
-                    .map((sub) => (
-                      <div
-                        key={sub.id}
-                        className='px-4 py-3 border-b border-black/10 last:border-b-0'>
-                        <div className='flex items-center justify-between'>
-                          <div className='flex items-center gap-3'>
-                            <button className='cursor-move text-gray-400 hover:text-gray-600 ml-8'>
-                              <GripVertical className='w-4 h-4' />
-                            </button>
+              {/* Subcategories */}
+              {expandedCategories[category.id!] &&
+                category.subcategories.length > 0 && (
+                  <div className='border-t bg-monarch-neutral-50'>
+                    {category.subcategories
+                      .filter((sub) => !sub.archived)
+                      .map((sub) => (
+                        <div
+                          key={sub.id}
+                          className='px-4 py-3 border-b last:border-b-0'>
+                          <div className='flex items-center justify-between'>
+                            <div className='flex items-center gap-3'>
+                              <button className='cursor-move text-monarch-neutral-400 hover:text-monarch-neutral-600 ml-8'>
+                                <GripVertical className='w-4 h-4' />
+                              </button>
 
-                            <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+                              <div className='w-3 h-3 bg-monarch-green-500 rounded-full'></div>
 
-                            <div>
-                              <span className='text-sm font-medium text-gray-700'>
-                                {sub.name}
-                              </span>
-                              <p className='text-xs text-gray-500'>
-                                ${sub.spent} of ${sub.budgeted}
-                              </p>
-                            </div>
-                          </div>
-
-                          <div className='flex items-center gap-6'>
-                            <div className='flex gap-6 text-sm'>
-                              <span className='text-gray-600'>
-                                Budget: ${sub.budgeted}
-                              </span>
-                              <span className='text-gray-600'>
-                                Spent: ${sub.spent}
-                              </span>
-                              <span className='text-green-600 font-medium'>
-                                Remaining: ${sub.remaining}
-                              </span>
+                              <div>
+                                <span className='text-sm font-medium text-monarch-neutral-700'>
+                                  {sub.name}
+                                </span>
+                                <p className='text-xs text-monarch-neutral-500'>
+                                  <Money value={sub.spent} /> of{' '}
+                                  <Money value={sub.budgeted} />
+                                </p>
+                              </div>
                             </div>
 
-                            <div className='flex items-center gap-1'>
-                              <button
-                                onClick={() => {
-                                  setEditingSubcategory(sub);
-                                  setEditingCategory({ id: category.id });
-                                  setShowSubcategoryModal(true);
-                                }}
-                                className='text-gray-500 hover:text-blue-600 p-1'>
-                                <Edit3 className='w-3 h-3' />
-                              </button>
+                            <div className='flex items-center gap-6'>
+                              <div className='flex gap-6 text-sm'>
+                                <span className='text-monarch-neutral-600'>
+                                  Budget: <Money value={sub.budgeted} />
+                                </span>
+                                <span className='text-monarch-neutral-600'>
+                                  Spent: <Money value={sub.spent} />
+                                </span>
+                                <span className='text-monarch-green-600 font-medium'>
+                                  Remaining: <Money value={sub.remaining} />
+                                </span>
+                              </div>
 
-                              <button
-                                onClick={() =>
-                                  handleArchiveSubcategory(
-                                    category.id!,
-                                    sub.id!
-                                  )
-                                }
-                                className='text-gray-500 hover:text-yellow-600 p-1'>
-                                <Archive className='w-3 h-3' />
-                              </button>
-
-                              <button
-                                onClick={() =>
-                                  handleDeleteSubcategory(category.id!, sub.id!)
-                                }
-                                className='text-gray-500 hover:text-red-600 p-1'>
-                                <Trash2 className='w-3 h-3' />
-                              </button>
+                              <div className='flex items-center gap-1'>
+                                <button
+                                  onClick={() => {
+                                    setEditingSubcategory(sub);
+                                    setParentCategoryId(category.id!);
+                                    setShowSubcategoryModal(true);
+                                  }}
+                                  className='text-monarch-neutral-500 hover:text-monarch-blue-600 p-1'>
+                                  <Edit3 className='w-3 h-3' />
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                </div>
-              )}
+                      ))}
+                  </div>
+                )}
             </div>
           ))}
       </div>
 
+      {/* Modals */}
       {showCategoryModal && (
         <CategoryModal
           category={editingCategory}
@@ -413,17 +628,16 @@ const BudgetPage = () => {
 
       {showSubcategoryModal && (
         <CategoryModal
-          category={editingSubcategory}
+          subcategory={editingSubcategory}
+          parentId={parentCategoryId}
           onClose={() => {
             setShowSubcategoryModal(false);
             setEditingSubcategory(null);
-            setEditingCategory(null);
+            setParentCategoryId(null);
           }}
-          onSave={(data) => handleCategorySave(data, editingCategory?.id)}
+          onSave={handleCategorySave}
         />
       )}
     </div>
   );
-};
-
-export default BudgetPage;
+}

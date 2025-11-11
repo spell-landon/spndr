@@ -1,3 +1,4 @@
+// app/routes/layout.tsx
 import { useEffect } from 'react';
 import { Outlet, useNavigate, Link, useLocation } from 'react-router';
 import { useAuth } from '../contexts/AuthContext';
@@ -11,6 +12,7 @@ import {
   Repeat,
   Target,
   User as UserIcon,
+  Settings as SettingsIcon,
 } from 'lucide-react';
 
 export default function Layout() {
@@ -27,7 +29,7 @@ export default function Layout() {
   if (loading) {
     return (
       <div className='flex h-screen items-center justify-center'>
-        <div className='w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin'></div>
+        <div className='w-12 h-12 border-4 border-monarch-orange-500 border-t-transparent rounded-full animate-spin'></div>
       </div>
     );
   }
@@ -42,16 +44,19 @@ export default function Layout() {
     { path: '/budget', name: 'Budget', icon: PieChart },
     { path: '/goals', name: 'Goals', icon: Target },
     { path: '/recurring', name: 'Recurring', icon: Repeat },
+    { path: '/settings/categories', name: 'Categories', icon: SettingsIcon },
   ];
 
   return (
-    <div className='flex h-screen bg-gray-100'>
-      <div className='w-64 bg-gray-50 h-screen p-4 border-r border-r-black/10 relative'>
+    <div className='flex h-screen bg-monarch-neutral-100'>
+      <div className='w-64 bg-monarch-neutral-50 h-screen p-4 border-r border-r-black/10 relative'>
         <div className='flex items-center mb-8'>
-          <div className='w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3'>
+          <div className='w-8 h-8 bg-monarch-orange-500 rounded-lg flex items-center justify-center mr-3'>
             <span className='text-white font-bold'>💰</span>
           </div>
-          <span className='font-semibold text-gray-800'>Budget App</span>
+          <span className='font-semibold text-monarch-neutral-800'>
+            Budget Buddy
+          </span>
         </div>
 
         <nav className='space-y-2'>
@@ -61,8 +66,8 @@ export default function Layout() {
               to={item.path}
               className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
                 location.pathname === item.path
-                  ? 'bg-orange-100 text-orange-600 font-medium'
-                  : 'text-gray-600 hover:bg-gray-100'
+                  ? 'bg-monarch-orange-100 text-monarch-orange-600 font-medium'
+                  : 'text-monarch-neutral-600 hover:bg-monarch-neutral-100'
               }`}>
               <item.icon className='w-5 h-5 mr-3' />
               {item.name}
@@ -75,8 +80,8 @@ export default function Layout() {
             to='/profile'
             className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
               location.pathname === '/profile'
-                ? 'bg-orange-100 text-orange-600 font-medium'
-                : 'text-gray-600 hover:bg-gray-100'
+                ? 'bg-monarch-orange-100 text-monarch-orange-600 font-medium'
+                : 'text-monarch-neutral-600 hover:bg-monarch-neutral-100'
             }`}>
             <UserIcon className='w-5 h-5 mr-3' />
             Profile

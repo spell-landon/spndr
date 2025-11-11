@@ -234,12 +234,12 @@ export default function Home() {
 //   const monthlySpending = 2221.26;
 
 //   const Sidebar = () => (
-//     <div className='w-64 bg-gray-50 h-screen p-4 border-r'>
+//     <div className='w-64 bg-monarch-neutral-50 h-screen p-4 border-r'>
 //       <div className='flex items-center mb-8'>
-//         <div className='w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center mr-3'>
+//         <div className='w-8 h-8 bg-monarch-orange-500 rounded-lg flex items-center justify-center mr-3'>
 //           <span className='text-white font-bold'>M</span>
 //         </div>
-//         <span className='font-semibold text-gray-800'>Budget App</span>
+//         <span className='font-semibold text-monarch-neutral-800'>Budget App</span>
 //       </div>
 
 //       <nav className='space-y-2'>
@@ -258,13 +258,13 @@ export default function Home() {
 //             onClick={() => setActiveTab(item.id)}
 //             className={`w-full flex items-center px-3 py-2 rounded-lg text-left transition-colors ${
 //               activeTab === item.id
-//                 ? 'bg-orange-100 text-orange-600 font-medium'
-//                 : 'text-gray-600 hover:bg-gray-100'
+//                 ? 'bg-orange-100 text-monarch-orange-600 font-medium'
+//                 : 'text-monarch-neutral-600 hover:bg-monarch-neutral-100'
 //             }`}>
 //             <item.icon className='w-5 h-5 mr-3' />
 //             {item.name}
 //             {item.id === 'recurring' && (
-//               <span className='ml-auto bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>
+//               <span className='ml-auto bg-monarch-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center'>
 //                 1
 //               </span>
 //             )}
@@ -303,14 +303,14 @@ export default function Home() {
 //             </h2>
 //             <button
 //               onClick={onClose}
-//               className='text-gray-500 hover:text-gray-700'>
+//               className='text-monarch-neutral-500 hover:text-monarch-neutral-700'>
 //               <X className='w-6 h-6' />
 //             </button>
 //           </div>
 
 //           <form onSubmit={handleSubmit} className='space-y-4'>
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Goal Name
 //               </label>
 //               <input
@@ -319,18 +319,18 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, name: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                 placeholder='Enter goal name'
 //                 required
 //               />
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Target Amount
 //               </label>
 //               <div className='relative'>
-//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-gray-400' />
+//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
 //                 <input
 //                   type='number'
 //                   step='0.01'
@@ -341,7 +341,7 @@ export default function Home() {
 //                       target: parseFloat(e.target.value) || 0,
 //                     })
 //                   }
-//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                   placeholder='0.00'
 //                   required
 //                 />
@@ -349,11 +349,11 @@ export default function Home() {
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Current Amount
 //               </label>
 //               <div className='relative'>
-//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-gray-400' />
+//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
 //                 <input
 //                   type='number'
 //                   step='0.01'
@@ -364,7 +364,7 @@ export default function Home() {
 //                       current: parseFloat(e.target.value) || 0,
 //                     })
 //                   }
-//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                   placeholder='0.00'
 //                 />
 //               </div>
@@ -374,12 +374,12 @@ export default function Home() {
 //               <button
 //                 type='button'
 //                 onClick={onClose}
-//                 className='flex-1 px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50'>
+//                 className='flex-1 px-4 py-2 text-monarch-neutral-600 border border-monarch-neutral-300 rounded-lg hover:bg-monarch-neutral-50'>
 //                 Cancel
 //               </button>
 //               <button
 //                 type='submit'
-//                 className='flex-1 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600'>
+//                 className='flex-1 px-4 py-2 bg-monarch-orange-500 text-white rounded-lg hover:bg-monarch-orange-600'>
 //                 {goal?.id ? 'Update' : 'Add'}
 //               </button>
 //             </div>
@@ -418,14 +418,14 @@ export default function Home() {
 //             </h2>
 //             <button
 //               onClick={onClose}
-//               className='text-gray-500 hover:text-gray-700'>
+//               className='text-monarch-neutral-500 hover:text-monarch-neutral-700'>
 //               <X className='w-6 h-6' />
 //             </button>
 //           </div>
 
 //           <form onSubmit={handleSubmit} className='space-y-4'>
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Name
 //               </label>
 //               <input
@@ -434,18 +434,18 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, name: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                 placeholder='Enter transaction name'
 //                 required
 //               />
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Amount
 //               </label>
 //               <div className='relative'>
-//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-gray-400' />
+//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
 //                 <input
 //                   type='number'
 //                   step='0.01'
@@ -456,7 +456,7 @@ export default function Home() {
 //                       amount: parseFloat(e.target.value) || 0,
 //                     })
 //                   }
-//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                   placeholder='0.00'
 //                   required
 //                 />
@@ -464,7 +464,7 @@ export default function Home() {
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Frequency
 //               </label>
 //               <select
@@ -472,7 +472,7 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, frequency: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'>
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'>
 //                 <option value='Daily'>Daily</option>
 //                 <option value='Weekly'>Weekly</option>
 //                 <option value='Every 2 weeks'>Every 2 weeks</option>
@@ -483,7 +483,7 @@ export default function Home() {
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Next Due
 //               </label>
 //               <input
@@ -492,7 +492,7 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, nextDue: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                 placeholder='e.g., Today, In 3 days'
 //                 required
 //               />
@@ -502,12 +502,12 @@ export default function Home() {
 //               <button
 //                 type='button'
 //                 onClick={onClose}
-//                 className='flex-1 px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50'>
+//                 className='flex-1 px-4 py-2 text-monarch-neutral-600 border border-monarch-neutral-300 rounded-lg hover:bg-monarch-neutral-50'>
 //                 Cancel
 //               </button>
 //               <button
 //                 type='submit'
-//                 className='flex-1 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600'>
+//                 className='flex-1 px-4 py-2 bg-monarch-orange-500 text-white rounded-lg hover:bg-monarch-orange-600'>
 //                 {recurring?.id ? 'Update' : 'Add'}
 //               </button>
 //             </div>
@@ -561,14 +561,14 @@ export default function Home() {
 //             </h2>
 //             <button
 //               onClick={onClose}
-//               className='text-gray-500 hover:text-gray-700'>
+//               className='text-monarch-neutral-500 hover:text-monarch-neutral-700'>
 //               <X className='w-6 h-6' />
 //             </button>
 //           </div>
 
 //           <form onSubmit={handleSubmit} className='space-y-4'>
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Name
 //               </label>
 //               <input
@@ -577,18 +577,18 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, name: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                 placeholder='Enter category name'
 //                 required
 //               />
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Budgeted Amount
 //               </label>
 //               <div className='relative'>
-//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-gray-400' />
+//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
 //                 <input
 //                   type='number'
 //                   step='0.01'
@@ -599,7 +599,7 @@ export default function Home() {
 //                       budgeted: parseFloat(e.target.value) || 0,
 //                     })
 //                   }
-//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                   placeholder='0.00'
 //                   required
 //                 />
@@ -607,11 +607,11 @@ export default function Home() {
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Spent Amount
 //               </label>
 //               <div className='relative'>
-//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-gray-400' />
+//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
 //                 <input
 //                   type='number'
 //                   step='0.01'
@@ -622,7 +622,7 @@ export default function Home() {
 //                       spent: parseFloat(e.target.value) || 0,
 //                     })
 //                   }
-//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                   placeholder='0.00'
 //                 />
 //               </div>
@@ -632,12 +632,12 @@ export default function Home() {
 //               <button
 //                 type='button'
 //                 onClick={onClose}
-//                 className='flex-1 px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50'>
+//                 className='flex-1 px-4 py-2 text-monarch-neutral-600 border border-monarch-neutral-300 rounded-lg hover:bg-monarch-neutral-50'>
 //                 Cancel
 //               </button>
 //               <button
 //                 type='submit'
-//                 className='flex-1 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600'>
+//                 className='flex-1 px-4 py-2 bg-monarch-orange-500 text-white rounded-lg hover:bg-monarch-orange-600'>
 //                 {category?.id || subcategory?.id ? 'Update' : 'Add'}
 //               </button>
 //             </div>
@@ -692,14 +692,14 @@ export default function Home() {
 //             </h2>
 //             <button
 //               onClick={onClose}
-//               className='text-gray-500 hover:text-gray-700'>
+//               className='text-monarch-neutral-500 hover:text-monarch-neutral-700'>
 //               <X className='w-6 h-6' />
 //             </button>
 //           </div>
 
 //           <form onSubmit={handleSubmit} className='space-y-4'>
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Merchant
 //               </label>
 //               <input
@@ -708,18 +708,18 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, merchant: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                 placeholder='Enter merchant name'
 //                 required
 //               />
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Amount
 //               </label>
 //               <div className='relative'>
-//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-gray-400' />
+//                 <DollarSign className='w-5 h-5 absolute left-3 top-3 text-monarch-neutral-400' />
 //                 <input
 //                   type='number'
 //                   step='0.01'
@@ -730,7 +730,7 @@ export default function Home() {
 //                       amount: parseFloat(e.target.value),
 //                     })
 //                   }
-//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                   className='w-full pl-10 pr-3 py-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                   placeholder='0.00'
 //                   required
 //                 />
@@ -738,7 +738,7 @@ export default function Home() {
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Category
 //               </label>
 //               <select
@@ -746,7 +746,7 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, category: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'>
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'>
 //                 {categories.map((cat) => (
 //                   <option key={cat} value={cat}>
 //                     {cat}
@@ -756,7 +756,7 @@ export default function Home() {
 //             </div>
 
 //             <div>
-//               <label className='block text-sm font-medium text-gray-700 mb-2'>
+//               <label className='block text-sm font-medium text-monarch-neutral-700 mb-2'>
 //                 Date
 //               </label>
 //               <input
@@ -765,7 +765,7 @@ export default function Home() {
 //                 onChange={(e) =>
 //                   setFormData({ ...formData, date: e.target.value })
 //                 }
-//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//                 className='w-full p-3 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //                 required
 //               />
 //             </div>
@@ -774,12 +774,12 @@ export default function Home() {
 //               <button
 //                 type='button'
 //                 onClick={onClose}
-//                 className='flex-1 px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50'>
+//                 className='flex-1 px-4 py-2 text-monarch-neutral-600 border border-monarch-neutral-300 rounded-lg hover:bg-monarch-neutral-50'>
 //                 Cancel
 //               </button>
 //               <button
 //                 type='submit'
-//                 className='flex-1 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600'>
+//                 className='flex-1 px-4 py-2 bg-monarch-orange-500 text-white rounded-lg hover:bg-monarch-orange-600'>
 //                 {transaction ? 'Update' : 'Add'} Transaction
 //               </button>
 //             </div>
@@ -793,12 +793,12 @@ export default function Home() {
 //     <div className='p-6'>
 //       <div className='flex justify-between items-center mb-6'>
 //         <div>
-//           <h1 className='text-2xl font-bold text-gray-800'>
+//           <h1 className='text-2xl font-bold text-monarch-neutral-800'>
 //             Welcome back, Landon!
 //           </h1>
-//           <p className='text-gray-600'>Budget April 2025</p>
+//           <p className='text-monarch-neutral-600'>Budget April 2025</p>
 //         </div>
-//         <button className='text-gray-500 hover:text-gray-700'>
+//         <button className='text-monarch-neutral-500 hover:text-monarch-neutral-700'>
 //           <Settings className='w-6 h-6' />
 //         </button>
 //       </div>
@@ -807,18 +807,18 @@ export default function Home() {
 //         <div className='bg-white rounded-xl p-6 shadow-sm border'>
 //           <div className='flex justify-between items-start mb-4'>
 //             <div>
-//               <p className='text-sm text-gray-600'>Income</p>
-//               <p className='text-2xl font-bold text-gray-800'>
+//               <p className='text-sm text-monarch-neutral-600'>Income</p>
+//               <p className='text-2xl font-bold text-monarch-neutral-800'>
 //                 ${totalIncome.toFixed(2)} earned
 //               </p>
 //             </div>
 //           </div>
-//           <div className='w-full bg-gray-200 rounded-full h-2'>
+//           <div className='w-full bg-monarch-neutral-200 rounded-full h-2'>
 //             <div
-//               className='bg-green-500 h-2 rounded-full'
+//               className='bg-monarch-green-500 h-2 rounded-full'
 //               style={{ width: '15%' }}></div>
 //           </div>
-//           <p className='text-sm text-green-600 mt-2'>
+//           <p className='text-sm text-monarch-green-600 mt-2'>
 //             ${(5500 - totalIncome).toFixed(2)} remaining
 //           </p>
 //         </div>
@@ -826,18 +826,18 @@ export default function Home() {
 //         <div className='bg-white rounded-xl p-6 shadow-sm border'>
 //           <div className='flex justify-between items-start mb-4'>
 //             <div>
-//               <p className='text-sm text-gray-600'>Expenses</p>
-//               <p className='text-2xl font-bold text-gray-800'>
+//               <p className='text-sm text-monarch-neutral-600'>Expenses</p>
+//               <p className='text-2xl font-bold text-monarch-neutral-800'>
 //                 ${totalExpenses.toFixed(2)} spent
 //               </p>
 //             </div>
 //           </div>
-//           <div className='w-full bg-gray-200 rounded-full h-2'>
+//           <div className='w-full bg-monarch-neutral-200 rounded-full h-2'>
 //             <div
-//               className='bg-orange-500 h-2 rounded-full'
+//               className='bg-monarch-orange-500 h-2 rounded-full'
 //               style={{ width: '35%' }}></div>
 //           </div>
-//           <p className='text-sm text-green-600 mt-2'>
+//           <p className='text-sm text-monarch-green-600 mt-2'>
 //             ${(4232 - totalExpenses).toFixed(2)} remaining
 //           </p>
 //         </div>
@@ -845,13 +845,13 @@ export default function Home() {
 //         <div className='bg-white rounded-xl p-6 shadow-sm border'>
 //           <div className='flex justify-between items-start mb-4'>
 //             <div>
-//               <p className='text-sm text-gray-600'>Net Worth</p>
-//               <p className='text-2xl font-bold text-gray-800'>
+//               <p className='text-sm text-monarch-neutral-600'>Net Worth</p>
+//               <p className='text-2xl font-bold text-monarch-neutral-800'>
 //                 ${netWorth.toLocaleString()}
 //               </p>
 //             </div>
 //           </div>
-//           <p className='text-sm text-green-600'>+$1,778.35 (4.3%)</p>
+//           <p className='text-sm text-monarch-green-600'>+$1,778.35 (4.3%)</p>
 //         </div>
 //       </div>
 
@@ -859,12 +859,12 @@ export default function Home() {
 //         <div className='bg-white rounded-xl p-6 shadow-sm border'>
 //           <div className='flex justify-between items-center mb-4'>
 //             <h3 className='text-lg font-semibold'>Spending</h3>
-//             <p className='text-sm text-gray-600'>
+//             <p className='text-sm text-monarch-neutral-600'>
 //               ${monthlySpending} this month
 //             </p>
 //           </div>
 //           <div className='h-48 bg-gradient-to-r from-orange-100 to-orange-200 rounded-lg flex items-center justify-center'>
-//             <div className='text-center text-sm text-gray-600'>
+//             <div className='text-center text-sm text-monarch-neutral-600'>
 //               📊 Spending Chart
 //             </div>
 //           </div>
@@ -875,7 +875,7 @@ export default function Home() {
 //             <h3 className='text-lg font-semibold'>Transactions</h3>
 //             <button
 //               onClick={() => setActiveTab('transactions')}
-//               className='text-sm text-orange-600 hover:text-orange-700'>
+//               className='text-sm text-monarch-orange-600 hover:text-monarch-orange-700'>
 //               All transactions
 //             </button>
 //           </div>
@@ -885,22 +885,22 @@ export default function Home() {
 //                 key={transaction.id}
 //                 className='flex justify-between items-center py-2'>
 //                 <div className='flex items-center'>
-//                   <div className='w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-3'>
-//                     <span className='text-sm font-medium text-gray-600'>
+//                   <div className='w-10 h-10 bg-monarch-neutral-100 rounded-full flex items-center justify-center mr-3'>
+//                     <span className='text-sm font-medium text-monarch-neutral-600'>
 //                       {transaction.merchant.charAt(0)}
 //                     </span>
 //                   </div>
 //                   <div>
-//                     <p className='font-medium text-gray-800'>
+//                     <p className='font-medium text-monarch-neutral-800'>
 //                       {transaction.merchant}
 //                     </p>
-//                     <p className='text-sm text-gray-600'>
+//                     <p className='text-sm text-monarch-neutral-600'>
 //                       {transaction.category}
 //                     </p>
 //                   </div>
 //                 </div>
 //                 <p
-//                   className={`font-semibold ${transaction.amount < 0 ? 'text-red-600' : 'text-green-600'}`}>
+//                   className={`font-semibold ${transaction.amount < 0 ? 'text-monarch-red-600' : 'text-monarch-green-600'}`}>
 //                   {transaction.amount < 0 ? '-' : '+'}$
 //                   {Math.abs(transaction.amount).toFixed(2)}
 //                 </p>
@@ -915,27 +915,27 @@ export default function Home() {
 //   const TransactionsPage = () => (
 //     <div className='p-6'>
 //       <div className='flex justify-between items-center mb-6'>
-//         <h1 className='text-2xl font-bold text-gray-800'>Transactions</h1>
+//         <h1 className='text-2xl font-bold text-monarch-neutral-800'>Transactions</h1>
 //         <div className='flex gap-3'>
 //           <div className='relative'>
-//             <Search className='w-5 h-5 absolute left-3 top-2.5 text-gray-400' />
+//             <Search className='w-5 h-5 absolute left-3 top-2.5 text-monarch-neutral-400' />
 //             <input
 //               type='text'
 //               placeholder='Search transactions...'
-//               className='pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+//               className='pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
 //             />
 //           </div>
-//           <button className='flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50'>
+//           <button className='flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-monarch-neutral-50'>
 //             <Calendar className='w-4 h-4' />
 //             Date
 //           </button>
-//           <button className='flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-gray-50'>
+//           <button className='flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-monarch-neutral-50'>
 //             <Filter className='w-4 h-4' />
 //             Filters
 //           </button>
 //           <button
 //             onClick={() => setShowTransactionModal(true)}
-//             className='bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex items-center gap-2'>
+//             className='bg-monarch-orange-500 text-white px-4 py-2 rounded-lg hover:bg-monarch-orange-600 flex items-center gap-2'>
 //             <PlusCircle className='w-4 h-4' />
 //             Add transaction
 //           </button>
@@ -945,8 +945,8 @@ export default function Home() {
 //       <div className='bg-white rounded-xl shadow-sm border'>
 //         <div className='p-4 border-b'>
 //           <div className='flex justify-between items-center'>
-//             <p className='text-sm text-gray-600'>All transactions</p>
-//             <p className='text-sm text-gray-600'>April 5, 2025</p>
+//             <p className='text-sm text-monarch-neutral-600'>All transactions</p>
+//             <p className='text-sm text-monarch-neutral-600'>April 5, 2025</p>
 //           </div>
 //         </div>
 
@@ -954,23 +954,23 @@ export default function Home() {
 //           {transactions.map((transaction) => (
 //             <div
 //               key={transaction.id}
-//               className='p-4 hover:bg-gray-50 cursor-pointer'
+//               className='p-4 hover:bg-monarch-neutral-50 cursor-pointer'
 //               onClick={() => {
 //                 setSelectedTransaction(transaction);
 //                 setShowTransactionModal(true);
 //               }}>
 //               <div className='flex justify-between items-center'>
 //                 <div className='flex items-center'>
-//                   <div className='w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-4'>
-//                     <span className='text-sm font-medium text-gray-600'>
+//                   <div className='w-10 h-10 bg-monarch-neutral-100 rounded-full flex items-center justify-center mr-4'>
+//                     <span className='text-sm font-medium text-monarch-neutral-600'>
 //                       {transaction.merchant.charAt(0)}
 //                     </span>
 //                   </div>
 //                   <div>
-//                     <p className='font-medium text-gray-800'>
+//                     <p className='font-medium text-monarch-neutral-800'>
 //                       {transaction.merchant}
 //                     </p>
-//                     <div className='flex items-center gap-4 text-sm text-gray-600'>
+//                     <div className='flex items-center gap-4 text-sm text-monarch-neutral-600'>
 //                       <span>{transaction.category}</span>
 //                       <span>{transaction.account}</span>
 //                     </div>
@@ -978,11 +978,11 @@ export default function Home() {
 //                 </div>
 //                 <div className='text-right'>
 //                   <p
-//                     className={`font-semibold ${transaction.amount < 0 ? 'text-red-600' : 'text-green-600'}`}>
+//                     className={`font-semibold ${transaction.amount < 0 ? 'text-monarch-red-600' : 'text-monarch-green-600'}`}>
 //                     {transaction.amount < 0 ? '-' : '+'}$
 //                     {Math.abs(transaction.amount).toFixed(2)}
 //                   </p>
-//                   <p className='text-sm text-gray-600'>
+//                   <p className='text-sm text-monarch-neutral-600'>
 //                     {new Date(transaction.date).toLocaleDateString()}
 //                   </p>
 //                 </div>
@@ -1097,18 +1097,18 @@ export default function Home() {
 //     return (
 //       <div className='p-6'>
 //         <div className='flex justify-between items-center mb-6'>
-//           <h1 className='text-2xl font-bold text-gray-800'>Budget</h1>
+//           <h1 className='text-2xl font-bold text-monarch-neutral-800'>Budget</h1>
 //           <div className='flex items-center gap-4'>
 //             <div className='text-right'>
-//               <p className='text-2xl font-bold text-green-600'>$1,268</p>
-//               <p className='text-sm text-gray-600'>Left to budget</p>
+//               <p className='text-2xl font-bold text-monarch-green-600'>$1,268</p>
+//               <p className='text-sm text-monarch-neutral-600'>Left to budget</p>
 //             </div>
 //             <button
 //               onClick={() => {
 //                 setEditingCategory({});
 //                 setShowCategoryModal(true);
 //               }}
-//               className='bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex items-center gap-2'>
+//               className='bg-monarch-orange-500 text-white px-4 py-2 rounded-lg hover:bg-monarch-orange-600 flex items-center gap-2'>
 //               <Plus className='w-4 h-4' />
 //               Add Category
 //             </button>
@@ -1125,13 +1125,13 @@ export default function Home() {
 //                 <div className='p-4'>
 //                   <div className='flex items-center justify-between'>
 //                     <div className='flex items-center gap-3'>
-//                       <button className='cursor-move text-gray-400 hover:text-gray-600'>
+//                       <button className='cursor-move text-monarch-neutral-400 hover:text-monarch-neutral-600'>
 //                         <GripVertical className='w-5 h-5' />
 //                       </button>
 
 //                       <button
 //                         onClick={() => toggleCategoryExpansion(category.id)}
-//                         className='text-gray-600 hover:text-gray-800'>
+//                         className='text-monarch-neutral-600 hover:text-monarch-neutral-800'>
 //                         {expandedCategories[category.id] ? (
 //                           <ChevronUp className='w-5 h-5' />
 //                         ) : (
@@ -1140,10 +1140,10 @@ export default function Home() {
 //                       </button>
 
 //                       <div>
-//                         <h3 className='font-semibold text-gray-800'>
+//                         <h3 className='font-semibold text-monarch-neutral-800'>
 //                           {category.name}
 //                         </h3>
-//                         <p className='text-sm text-gray-600'>
+//                         <p className='text-sm text-monarch-neutral-600'>
 //                           ${category.spent} of ${category.budgeted} spent
 //                         </p>
 //                       </div>
@@ -1154,7 +1154,7 @@ export default function Home() {
 //                         <p className='font-semibold text-lg'>
 //                           ${category.remaining}
 //                         </p>
-//                         <p className='text-sm text-gray-600'>remaining</p>
+//                         <p className='text-sm text-monarch-neutral-600'>remaining</p>
 //                       </div>
 
 //                       <div className='flex items-center gap-2'>
@@ -1163,19 +1163,19 @@ export default function Home() {
 //                             setEditingCategory(category);
 //                             setShowCategoryModal(true);
 //                           }}
-//                           className='text-gray-500 hover:text-blue-600 p-1'>
+//                           className='text-monarch-neutral-500 hover:text-monarch-blue-600 p-1'>
 //                           <Edit3 className='w-4 h-4' />
 //                         </button>
 
 //                         <button
 //                           onClick={() => handleArchiveCategory(category.id)}
-//                           className='text-gray-500 hover:text-yellow-600 p-1'>
+//                           className='text-monarch-neutral-500 hover:text-yellow-600 p-1'>
 //                           <Archive className='w-4 h-4' />
 //                         </button>
 
 //                         <button
 //                           onClick={() => handleDeleteCategory(category.id)}
-//                           className='text-gray-500 hover:text-red-600 p-1'>
+//                           className='text-monarch-neutral-500 hover:text-monarch-red-600 p-1'>
 //                           <Trash2 className='w-4 h-4' />
 //                         </button>
 
@@ -1185,7 +1185,7 @@ export default function Home() {
 //                             setEditingCategory({ id: category.id });
 //                             setShowSubcategoryModal(true);
 //                           }}
-//                           className='text-orange-500 hover:text-orange-600 p-1'>
+//                           className='text-monarch-orange-500 hover:text-monarch-orange-600 p-1'>
 //                           <Plus className='w-4 h-4' />
 //                         </button>
 //                       </div>
@@ -1193,9 +1193,9 @@ export default function Home() {
 //                   </div>
 
 //                   <div className='mt-4'>
-//                     <div className='w-full bg-gray-200 rounded-full h-2'>
+//                     <div className='w-full bg-monarch-neutral-200 rounded-full h-2'>
 //                       <div
-//                         className='bg-orange-500 h-2 rounded-full transition-all duration-300'
+//                         className='bg-monarch-orange-500 h-2 rounded-full transition-all duration-300'
 //                         style={{
 //                           width: `${Math.min((category.spent / category.budgeted) * 100, 100)}%`,
 //                         }}></div>
@@ -1204,7 +1204,7 @@ export default function Home() {
 //                 </div>
 
 //                 {expandedCategories[category.id] && (
-//                   <div className='border-t bg-gray-50'>
+//                   <div className='border-t bg-monarch-neutral-50'>
 //                     {category.subcategories
 //                       .filter((sub) => !sub.archived)
 //                       .map((sub) => (
@@ -1213,17 +1213,17 @@ export default function Home() {
 //                           className='px-4 py-3 border-b last:border-b-0'>
 //                           <div className='flex items-center justify-between'>
 //                             <div className='flex items-center gap-3'>
-//                               <button className='cursor-move text-gray-400 hover:text-gray-600 ml-8'>
+//                               <button className='cursor-move text-monarch-neutral-400 hover:text-monarch-neutral-600 ml-8'>
 //                                 <GripVertical className='w-4 h-4' />
 //                               </button>
 
-//                               <div className='w-3 h-3 bg-green-500 rounded-full'></div>
+//                               <div className='w-3 h-3 bg-monarch-green-500 rounded-full'></div>
 
 //                               <div>
-//                                 <span className='text-sm font-medium text-gray-700'>
+//                                 <span className='text-sm font-medium text-monarch-neutral-700'>
 //                                   {sub.name}
 //                                 </span>
-//                                 <p className='text-xs text-gray-500'>
+//                                 <p className='text-xs text-monarch-neutral-500'>
 //                                   ${sub.spent} of ${sub.budgeted}
 //                                 </p>
 //                               </div>
@@ -1231,13 +1231,13 @@ export default function Home() {
 
 //                             <div className='flex items-center gap-6'>
 //                               <div className='flex gap-6 text-sm'>
-//                                 <span className='text-gray-600'>
+//                                 <span className='text-monarch-neutral-600'>
 //                                   Budget: ${sub.budgeted}
 //                                 </span>
-//                                 <span className='text-gray-600'>
+//                                 <span className='text-monarch-neutral-600'>
 //                                   Spent: ${sub.spent}
 //                                 </span>
-//                                 <span className='text-green-600 font-medium'>
+//                                 <span className='text-monarch-green-600 font-medium'>
 //                                   Remaining: ${sub.remaining}
 //                                 </span>
 //                               </div>
@@ -1249,7 +1249,7 @@ export default function Home() {
 //                                     setEditingCategory({ id: category.id });
 //                                     setShowSubcategoryModal(true);
 //                                   }}
-//                                   className='text-gray-500 hover:text-blue-600 p-1'>
+//                                   className='text-monarch-neutral-500 hover:text-monarch-blue-600 p-1'>
 //                                   <Edit3 className='w-3 h-3' />
 //                                 </button>
 
@@ -1260,7 +1260,7 @@ export default function Home() {
 //                                       sub.id
 //                                     )
 //                                   }
-//                                   className='text-gray-500 hover:text-yellow-600 p-1'>
+//                                   className='text-monarch-neutral-500 hover:text-yellow-600 p-1'>
 //                                   <Archive className='w-3 h-3' />
 //                                 </button>
 
@@ -1268,7 +1268,7 @@ export default function Home() {
 //                                   onClick={() =>
 //                                     handleDeleteSubcategory(category.id, sub.id)
 //                                   }
-//                                   className='text-gray-500 hover:text-red-600 p-1'>
+//                                   className='text-monarch-neutral-500 hover:text-monarch-red-600 p-1'>
 //                                   <Trash2 className='w-3 h-3' />
 //                                 </button>
 //                               </div>
@@ -1285,8 +1285,8 @@ export default function Home() {
 //         {budgetCategories.some(
 //           (cat) => cat.archived || cat.subcategories.some((sub) => sub.archived)
 //         ) && (
-//           <div className='mt-6 p-4 bg-gray-100 rounded-lg'>
-//             <h3 className='font-semibold text-gray-700 mb-3'>Archived Items</h3>
+//           <div className='mt-6 p-4 bg-monarch-neutral-100 rounded-lg'>
+//             <h3 className='font-semibold text-monarch-neutral-700 mb-3'>Archived Items</h3>
 //             <div className='space-y-2'>
 //               {budgetCategories
 //                 .filter((cat) => cat.archived)
@@ -1294,16 +1294,16 @@ export default function Home() {
 //                   <div
 //                     key={cat.id}
 //                     className='flex items-center justify-between py-2 px-3 bg-white rounded border'>
-//                     <span className='text-gray-600'>{cat.name} (Category)</span>
+//                     <span className='text-monarch-neutral-600'>{cat.name} (Category)</span>
 //                     <div className='flex gap-2'>
 //                       <button
 //                         onClick={() => handleArchiveCategory(cat.id)}
-//                         className='text-sm text-blue-600 hover:text-blue-800'>
+//                         className='text-sm text-monarch-blue-600 hover:text-monarch-blue-800'>
 //                         Restore
 //                       </button>
 //                       <button
 //                         onClick={() => handleDeleteCategory(cat.id)}
-//                         className='text-sm text-red-600 hover:text-red-800'>
+//                         className='text-sm text-monarch-red-600 hover:text-monarch-red-800'>
 //                         Delete
 //                       </button>
 //                     </div>
@@ -1361,13 +1361,13 @@ export default function Home() {
 //     return (
 //       <div className='p-6'>
 //         <div className='flex justify-between items-center mb-6'>
-//           <h1 className='text-2xl font-bold text-gray-800'>Goals</h1>
+//           <h1 className='text-2xl font-bold text-monarch-neutral-800'>Goals</h1>
 //           <button
 //             onClick={() => {
 //               setEditingGoal({});
 //               setShowGoalModal(true);
 //             }}
-//             className='bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex items-center gap-2'>
+//             className='bg-monarch-orange-500 text-white px-4 py-2 rounded-lg hover:bg-monarch-orange-600 flex items-center gap-2'>
 //             <Plus className='w-4 h-4' />
 //             Add Goal
 //           </button>
@@ -1385,24 +1385,24 @@ export default function Home() {
 //                       setEditingGoal(goal);
 //                       setShowGoalModal(true);
 //                     }}
-//                     className='text-gray-500 hover:text-blue-600 p-1'>
+//                     className='text-monarch-neutral-500 hover:text-monarch-blue-600 p-1'>
 //                     <Edit3 className='w-4 h-4' />
 //                   </button>
 //                   <button
 //                     onClick={() => handleDeleteGoal(goal.id)}
-//                     className='text-gray-500 hover:text-red-600 p-1'>
+//                     className='text-monarch-neutral-500 hover:text-monarch-red-600 p-1'>
 //                     <Trash2 className='w-4 h-4' />
 //                   </button>
 //                 </div>
 //               </div>
 
 //               <div className='flex items-center mb-4'>
-//                 <div className='w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mr-4'>
-//                   <Target className='w-6 h-6 text-gray-600' />
+//                 <div className='w-12 h-12 bg-monarch-neutral-100 rounded-lg flex items-center justify-center mr-4'>
+//                   <Target className='w-6 h-6 text-monarch-neutral-600' />
 //                 </div>
 //                 <div>
-//                   <h3 className='font-semibold text-gray-800'>{goal.name}</h3>
-//                   <p className='text-sm text-gray-600'>
+//                   <h3 className='font-semibold text-monarch-neutral-800'>{goal.name}</h3>
+//                   <p className='text-sm text-monarch-neutral-600'>
 //                     ${goal.current} of ${goal.target}
 //                   </p>
 //                 </div>
@@ -1410,12 +1410,12 @@ export default function Home() {
 
 //               {goal.target > 0 && (
 //                 <>
-//                   <div className='w-full bg-gray-200 rounded-full h-2 mb-3'>
+//                   <div className='w-full bg-monarch-neutral-200 rounded-full h-2 mb-3'>
 //                     <div
-//                       className='bg-green-500 h-2 rounded-full'
+//                       className='bg-monarch-green-500 h-2 rounded-full'
 //                       style={{ width: `${goal.progress}%` }}></div>
 //                   </div>
-//                   <p className='text-sm text-gray-600'>
+//                   <p className='text-sm text-monarch-neutral-600'>
 //                     {goal.progress.toFixed(0)}% complete
 //                   </p>
 //                 </>
@@ -1463,15 +1463,15 @@ export default function Home() {
 //     return (
 //       <div className='p-6'>
 //         <div className='flex justify-between items-center mb-6'>
-//           <h1 className='text-2xl font-bold text-gray-800'>Recurring</h1>
+//           <h1 className='text-2xl font-bold text-monarch-neutral-800'>Recurring</h1>
 //           <div className='flex items-center gap-4'>
-//             <p className='text-sm text-gray-600'>$153.90 remaining due</p>
+//             <p className='text-sm text-monarch-neutral-600'>$153.90 remaining due</p>
 //             <button
 //               onClick={() => {
 //                 setEditingRecurring({});
 //                 setShowRecurringModal(true);
 //               }}
-//               className='bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 flex items-center gap-2'>
+//               className='bg-monarch-orange-500 text-white px-4 py-2 rounded-lg hover:bg-monarch-orange-600 flex items-center gap-2'>
 //               <Plus className='w-4 h-4' />
 //               Add Recurring
 //             </button>
@@ -1481,27 +1481,27 @@ export default function Home() {
 //         <div className='bg-white rounded-xl shadow-sm border'>
 //           <div className='divide-y'>
 //             {recurringTransactions.map((transaction) => (
-//               <div key={transaction.id} className='p-4 group hover:bg-gray-50'>
+//               <div key={transaction.id} className='p-4 group hover:bg-monarch-neutral-50'>
 //                 <div className='flex justify-between items-center'>
 //                   <div className='flex items-center'>
-//                     <div className='w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mr-4'>
-//                       <Repeat className='w-5 h-5 text-gray-600' />
+//                     <div className='w-10 h-10 bg-monarch-neutral-100 rounded-full flex items-center justify-center mr-4'>
+//                       <Repeat className='w-5 h-5 text-monarch-neutral-600' />
 //                     </div>
 //                     <div>
-//                       <p className='font-medium text-gray-800'>
+//                       <p className='font-medium text-monarch-neutral-800'>
 //                         {transaction.name}
 //                       </p>
-//                       <p className='text-sm text-gray-600'>
+//                       <p className='text-sm text-monarch-neutral-600'>
 //                         {transaction.frequency}
 //                       </p>
 //                     </div>
 //                   </div>
 //                   <div className='flex items-center gap-4'>
 //                     <div className='text-right'>
-//                       <p className='font-semibold text-gray-800'>
+//                       <p className='font-semibold text-monarch-neutral-800'>
 //                         ${transaction.amount}
 //                       </p>
-//                       <p className='text-sm text-gray-600'>
+//                       <p className='text-sm text-monarch-neutral-600'>
 //                         {transaction.nextDue}
 //                       </p>
 //                     </div>
@@ -1511,12 +1511,12 @@ export default function Home() {
 //                           setEditingRecurring(transaction);
 //                           setShowRecurringModal(true);
 //                         }}
-//                         className='text-gray-500 hover:text-blue-600 p-1'>
+//                         className='text-monarch-neutral-500 hover:text-monarch-blue-600 p-1'>
 //                         <Edit3 className='w-4 h-4' />
 //                       </button>
 //                       <button
 //                         onClick={() => handleDeleteRecurring(transaction.id)}
-//                         className='text-gray-500 hover:text-red-600 p-1'>
+//                         className='text-monarch-neutral-500 hover:text-monarch-red-600 p-1'>
 //                         <Trash2 className='w-4 h-4' />
 //                       </button>
 //                     </div>
@@ -1556,10 +1556,10 @@ export default function Home() {
 //       default:
 //         return (
 //           <div className='p-6'>
-//             <h1 className='text-2xl font-bold text-gray-800 mb-4'>
+//             <h1 className='text-2xl font-bold text-monarch-neutral-800 mb-4'>
 //               {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)}
 //             </h1>
-//             <p className='text-gray-600'>This section is coming soon!</p>
+//             <p className='text-monarch-neutral-600'>This section is coming soon!</p>
 //           </div>
 //         );
 //     }
@@ -1585,7 +1585,7 @@ export default function Home() {
 //   };
 
 //   return (
-//     <div className='flex h-screen bg-gray-100'>
+//     <div className='flex h-screen bg-monarch-neutral-100'>
 //       <Sidebar />
 
 //       <div className='flex-1 overflow-auto'>{renderContent()}</div>

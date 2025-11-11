@@ -1,3 +1,4 @@
+// app/lib/supabaseCategories.ts
 import { supabase } from './supabase';
 import { type BudgetCategory } from '~/types';
 

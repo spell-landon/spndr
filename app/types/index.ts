@@ -1,22 +1,34 @@
+// app/types/index.ts
 export interface User {
   id: string;
   email: string;
-  user_metadata?: {
+  user_metadata: {
     name?: string;
   };
-  name?: string; // optional convenience fallback
+}
+
+export interface UserSettings {
+  id?: string;
+  user_id: string;
+  starting_balance: number;
+  starting_balance_locked: boolean;
+  currency: string;
+  date_format: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface Transaction {
-  $id?: string;
-  id?: number;
+  id?: string;
+  user_id: string;
   merchant: string;
   category: string;
   amount: number;
   date: string;
   account: string;
   type: 'income' | 'expense';
-  userId: string;
+  notes?: string;
+  created_at?: string;
 }
 
 export interface Subcategory {
@@ -29,35 +41,49 @@ export interface Subcategory {
 }
 
 export interface BudgetCategory {
-  $id?: string;
-  id: number;
+  id?: string;
+  user_id: string;
   name: string;
   budgeted: number;
   spent: number;
   remaining: number;
   archived: boolean;
   subcategories: Subcategory[];
-  userId: string;
+  created_at?: string;
 }
 
 export interface Goal {
-  $id?: string;
-  id: number;
+  id?: string;
+  user_id: string;
   name: string;
   target: number;
   current: number;
   progress: number;
-  userId: string;
+  created_at?: string;
 }
 
 export interface RecurringTransaction {
-  $id?: string;
-  id: number;
+  id?: string;
+  user_id: string;
   name: string;
   amount: number;
   frequency: string;
-  nextDue: string;
-  userId: string;
+  next_due: string;
+  created_at?: string;
+  merchant?: string;
+  category?: string;
+  account?: string;
+}
+
+export interface MonthlyBudget {
+  id?: string;
+  user_id: string;
+  month: string; // YYYY-MM-DD format (first day of month)
+  total_income: number;
+  total_expenses: number;
+  total_budgeted: number;
+  categories: BudgetCategory[];
+  created_at?: string;
 }
 
 export interface AuthContextType {

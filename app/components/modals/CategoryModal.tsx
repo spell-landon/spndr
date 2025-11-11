@@ -1,3 +1,4 @@
+// app/components/modals/CategoryModal.tsx
 import React, { useEffect, useState, type FormEvent } from 'react';
 import { X, DollarSign } from 'lucide-react';
 
@@ -78,7 +79,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
           </h2>
           <button
             onClick={onClose}
-            className='text-gray-400 hover:text-gray-600'
+            className='text-monarch-neutral-400 hover:text-monarch-neutral-600'
             aria-label='Close'>
             <X className='w-5 h-5' />
           </button>
@@ -86,24 +87,24 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
 
         <form onSubmit={handleSubmit} className='space-y-4'>
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-1'>
+            <label className='block text-sm font-medium text-monarch-neutral-700 mb-1'>
               Category Name
             </label>
             <input
               type='text'
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className='w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+              className='w-full border border-monarch-neutral-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
               required
             />
           </div>
 
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-1'>
+            <label className='block text-sm font-medium text-monarch-neutral-700 mb-1'>
               Budgeted Amount
             </label>
             <div className='relative'>
-              <DollarSign className='w-4 h-4 absolute left-3 top-3 text-gray-400' />
+              <DollarSign className='w-4 h-4 absolute left-3 top-3 text-monarch-neutral-400' />
               <input
                 type='number'
                 step='0.01'
@@ -114,17 +115,17 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                     budgeted: parseFloat(e.target.value) || 0,
                   })
                 }
-                className='w-full pl-8 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+                className='w-full pl-8 border border-monarch-neutral-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
               />
             </div>
           </div>
 
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-1'>
+            <label className='block text-sm font-medium text-monarch-neutral-700 mb-1'>
               Spent
             </label>
             <div className='relative'>
-              <DollarSign className='w-4 h-4 absolute left-3 top-3 text-gray-400' />
+              <DollarSign className='w-4 h-4 absolute left-3 top-3 text-monarch-neutral-400' />
               <input
                 type='number'
                 step='0.01'
@@ -132,7 +133,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                 onChange={(e) =>
                   setForm({ ...form, spent: parseFloat(e.target.value) || 0 })
                 }
-                className='w-full pl-8 border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-500 focus:border-orange-500'
+                className='w-full pl-8 border border-monarch-neutral-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-monarch-orange-500 focus:border-monarch-orange-500'
               />
             </div>
           </div>
@@ -141,12 +142,12 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             <button
               type='button'
               onClick={onClose}
-              className='flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50'>
+              className='flex-1 px-4 py-2 border border-monarch-neutral-300 rounded-lg hover:bg-monarch-neutral-50'>
               Cancel
             </button>
             <button
               type='submit'
-              className='flex-1 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600'>
+              className='flex-1 px-4 py-2 bg-monarch-orange-500 text-white rounded-lg hover:bg-monarch-orange-600'>
               {form.id ? 'Update' : 'Add'}
             </button>
           </div>
